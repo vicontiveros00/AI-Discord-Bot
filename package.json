@@ -1,0 +1,22 @@
+{
+  "name": "eeroai",
+  "version": "1.0.0",
+  "description": "AI Eero",
+  "main": "server.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write .",
+    "dev": "nodemon server.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^14.11.0",
+    "dotenv": "^16.1.4",
+    "nodemon": "^2.0.22",
+    "openai": "^3.2.1"
+  },
+  "devDependencies": {
+    "prettier": "2.8.8"
+  }
+}
