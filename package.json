@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --write .",
-    "dev": "nodemon server.ts"
+    "dev": "nodemon server.ts",
+    "start": "tsc & node ./build/server.js"
   },
   "author": "",
   "license": "ISC",

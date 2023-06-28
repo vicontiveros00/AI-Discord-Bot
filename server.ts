@@ -13,13 +13,16 @@ const client = new Client({
 const TOKEN: string = String(process.env.TOKEN);
 const PREFIX: string = String(process.env.PREFIX);
 const DEFAULT_MSG: string = String(process.env.DEFAULT_MSG);
+const ACVTIVITY: string = String(process.env.ACTIVITY);
 
 client.on(Events.ClientReady, () => {
   console.log(`LOG IN SUCCESSFUL: ${client.user?.tag}`);
-  if (!client.user?.avatar) {
+  if (ACVTIVITY) {
     client.user?.setPresence({
-      activities: [{ name: "fucking stupid", type: ActivityType.Playing }],
+      activities: [{ name: ACVTIVITY, type: ActivityType.Playing }],
     });
+  }
+  if (!client.user?.avatar) {
     try {
       client.user?.setAvatar("./avatar.png");
       console.log("AVATAR UPDATED");

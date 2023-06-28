@@ -27,7 +27,6 @@ export const query = async (qry: string): Promise<string> => {
     }
     return completion.data.choices[0].text!;
   } catch (err) {
-    console.error(err);
     console.error(`OPENAI ERROR: ${err}`);
     return `(_${err}_)`;
   }

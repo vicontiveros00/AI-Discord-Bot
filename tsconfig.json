@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "target": "ES2020",
+        "module": "commonjs",
+        "outDir": "./build",
+        "rootDir": ".",
+        "strict": false,
+        "esModuleInterop": true
+    },
+    "include": [
+        "server.ts", "util.js"
+    ],
+    "exclude": [
+        "./node_modules"
+    ]
+}
