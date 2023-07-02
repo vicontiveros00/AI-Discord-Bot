@@ -72,10 +72,14 @@ export const envValidate = () => {
     //continue validation for env file throug this function
     //this function should run first before anything else
     ACTIVITY: nullable(string()),
-    EXPOSE_PORT: string().min(1, { message: 'Port cannot be empty'}).or(number().min(1, {message: "Port cannot be empty"}))
+    EXPOSE_PORT: string()
+      .min(1, { message: "Port cannot be empty" })
+      .or(number().min(1, { message: "Port cannot be empty" })),
   });
   const result = envSchema.safeParse(env);
   if (!result.success) {
-    throw new Error(`Env variables are not valid or missing! ${result['error']}`)
+    throw new Error(
+      `Env variables are not valid or missing! ${result["error"]}`
+    );
   }
 };
