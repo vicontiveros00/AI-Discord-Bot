@@ -1,6 +1,7 @@
 import { ActivityType, Client, Events, GatewayIntentBits } from "discord.js";
 import { config } from "dotenv";
-import { checkMsgContent, query } from "./util";
+import express from "express";
+import { checkMsgContent, envValidate, query } from "./util";
 config();
 const client = new Client({
   intents: [
@@ -10,6 +11,9 @@ const client = new Client({
     GatewayIntentBits.DirectMessages,
   ],
 });
+
+envValidate();
+
 const TOKEN: string = String(process.env.TOKEN);
 const PREFIX: string = String(process.env.PREFIX);
 const DEFAULT_MSG: string = String(process.env.DEFAULT_MSG);
@@ -46,12 +50,13 @@ client.on(Events.MessageCreate, async (message) => {
     }
   }
 
-  if (checkMsgContent(message.content, PREFIX) && !message.author.bot && !message.reference) {
+  if (
+    checkMsgContent(message.content, PREFIX) &&
+    !message.author.bot &&
+    !message.reference
+  ) {
     //verify message contains activation string and does not come from another bot and is not a reply
-    const promptToAI = message.content
-      .toLowerCase()
-      .replace(PREFIX, "")
-      .trim();
+    const promptToAI = message.content.toLowerCase().replace(PREFIX, "").trim();
     //filter out activation string from original message
     message.channel.sendTyping();
     if (promptToAI.length === 0) {
@@ -59,7 +64,10 @@ client.on(Events.MessageCreate, async (message) => {
       return;
     }
     const response = await query(promptToAI.trim());
-    await message.channel.send(response);
+    if (response) {
+      await message.channel.send(response);
+      return;
+    }
   }
 });
 
@@ -80,3 +88,15 @@ client.on(Events.ShardResume, () => {
 });
 
 client.login(TOKEN);
+
+/*
+  Following code does not affect the bot
+  Port needs to be exposed for some VMs
+*/
+
+const app = express();
+const port = Number(process.env.EXPOSE_PORT);
+
+app.listen(port, "0.0.0.0", (_req: Request, _res: Response) => {
+  console.log(`👂 on port ${port}....`);
+});
