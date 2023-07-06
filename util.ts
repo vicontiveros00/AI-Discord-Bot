@@ -43,7 +43,8 @@ export const query = async (qry: string): Promise<string> => {
 
     if (
       !completion.data.choices[0].text ||
-      completion.data.choices[0].text === "."
+      completion.data.choices[0].text === "." ||
+      completion.data.choices[0].text.length === 0
     ) {
       apiCallAttempts++;
       console.warn(
